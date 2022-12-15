@@ -1,6 +1,6 @@
 <template>
-    <div class="pet-item">
-        {{ item.name }}
+    <div class="pet-item" @click="this.$emit('take', item.id)">
+        {{ item.id }}
     </div>
 </template>
 

@@ -5,6 +5,8 @@
             v-for="pet in pets"
             :key="pet.id"
             :item="pet"
+
+            @take="placePet"
         >
 
         </pet-item>
@@ -12,7 +14,7 @@
 </template>
 
 <script>
-
+import {mapActions} from "vuex";
 import PetItem from "@/components/items/PetItem.vue";
 
 export default {
@@ -31,6 +33,13 @@ export default {
     },
 
     data: () => ({}),
+
+    methods: {
+        placePet(id) {
+            this.setActivePet(id)
+        },
+        ...mapActions({setActivePet: 'pets/setActivePet'})
+    },
 
     computed: {
         petsAvailable() {

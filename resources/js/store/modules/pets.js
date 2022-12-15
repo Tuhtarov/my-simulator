@@ -15,11 +15,18 @@ export default {
     actions: {
         async fetchAllPets({commit, getters}) {
             return await axios.get("/pets")
-                .then(pets => {
-                    commit('setAllPets', pets)
+                .then(({data}) => {
+                    console.dir(data)
+                    commit('setAllPets', data)
                     return getters.allPets;
                 })
         },
+
+        async setActivePet({commit}, petId) {
+            console.log(petId)
+
+            return await petId;
+        }
     },
     namespaced: true,
 }
