@@ -10,4 +10,14 @@ class PetType extends Model
     use HasFactory;
 
     protected $table = 'pet_types';
+
+    public function pets()
+    {
+        return $this->belongsTo(Pet::class);
+    }
+
+    public function image()
+    {
+        return $this->hasOne(Image::class);
+    }
 }
