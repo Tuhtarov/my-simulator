@@ -1,0 +1,28 @@
+version: "3.1"
+services:
+  sprinthost_web:
+    container_name: sprinthost_web
+    build:
+      context: ../
+    ports:
+      - "808:80"
+    restart: always
+    volumes:
+      - "../:/var/www/html"
+      - "./docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+    links:
+      - sprinthost_db
+
+  sprinthost_db:
+    image: mysql:8.0
+    container_name: sprinthost_db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3308:3306"
+    volumes:
+      - "./db/data:/var/lib/mysql"
+      - "./db/dumps:/var/backups"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pets
