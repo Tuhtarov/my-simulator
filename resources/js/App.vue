@@ -10,34 +10,29 @@
 </template>
 
 <script>
-import data from "bootstrap/js/src/dom/data";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "App",
 
     data: () => ({
         panelIsOpen: false,
-        pets: []
     }),
+    computed: {
+        ...mapGetters({
+            pets: 'pets/allPets',
+        }),
+    },
 
     methods: {
         openPanel() {
-            console.log("openPanel")
             this.panelIsOpen = !this.panelIsOpen;
-        }
+        },
+        ...mapActions({fetchPets: 'pets/fetchAllPets'})
     },
 
     beforeMount() {
-        this.pets = [
-            {
-                id: 1,
-                name: "Magic",
-            },
-            {
-                id: 2,
-                name: "Magic",
-            }
-        ]
+        this.fetchPets()
     }
 }
 </script>

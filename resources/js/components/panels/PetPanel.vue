@@ -4,6 +4,7 @@
             v-if="petsAvailable"
             v-for="pet in pets"
             :key="pet.id"
+            :item="pet"
         >
 
         </pet-item>
@@ -12,7 +13,7 @@
 
 <script>
 
-import PetItem from "../items/PetItem.vue";
+import PetItem from "@/components/items/PetItem.vue";
 
 export default {
     name: "PetPanel",
