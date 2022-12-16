@@ -13,6 +13,6 @@ class Pet extends Model
 
     public function petType()
     {
-        return $this->hasOne(PetType::class);
+        return $this->belongsTo(PetType::class);
     }
 }

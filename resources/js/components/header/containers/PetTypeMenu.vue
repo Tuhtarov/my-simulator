@@ -1,17 +1,17 @@
 <template>
-    <div class="pet-menu">
+    <div class="pet-type-menu">
         <slot/>
     </div>
 </template>
 
 <script>
 export default {
-    name: "pet-menu"
+    name: "PetTypeMenu"
 }
 </script>
 
 <style scoped>
-.pet-menu {
+.pet-type-menu {
     z-index: 1;
     position: relative;
     height: 48px;

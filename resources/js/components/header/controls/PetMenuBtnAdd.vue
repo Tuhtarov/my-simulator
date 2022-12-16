@@ -4,7 +4,7 @@
 
 <script>
 export default {
-    name: "BtnAdd",
+    name: "PetMenuBtnAdd",
     methods: {
     }
 }

@@ -1,28 +1,27 @@
 <template>
-    <div v-show="open" class="pet-panel">
-        <pet-item
+    <div v-show="open" class="pet-type-menu-panel">
+        <pet-menu-item
             v-if="petsAvailable"
-            v-for="pet in pets"
+            v-for="pet in petTypes"
             :key="pet.id"
             :item="pet"
 
-            @take="placePet"
+            @take="createPet"
         >
 
-        </pet-item>
+        </pet-menu-item>
     </div>
 </template>
 
 <script>
 import {mapActions} from "vuex";
-import PetItem from "@/components/items/PetItem.vue";
+import PetMenuItem from "@header/items/PetMenuItem.vue";
 
 export default {
-    name: "PetPanel",
-    components: {PetItem},
-
+    name: "PetTypeMenuPanel",
+    components: {PetMenuItem},
     props: {
-        pets: {
+        petTypes: {
             type: Array,
             default: []
         },
@@ -35,22 +34,22 @@ export default {
     data: () => ({}),
 
     methods: {
-        placePet(id) {
-            this.setActivePet(id)
+        createPet(petType) {
+            this.openCreatePetDialog(petType)
         },
-        ...mapActions({setActivePet: 'pets/setActivePet'})
+        ...mapActions({openCreatePetDialog: 'controls/openCreatePetDialog'})
     },
 
     computed: {
         petsAvailable() {
-            return this.pets !== null && this.pets.length > 0;
+            return this.petTypes !== null && this.petTypes.length > 0;
         }
     }
 }
 </script>
 
 <style scoped>
-.pet-panel {
+.pet-type-menu-panel {
     display: flex;
     flex-wrap: wrap;
     align-items: center;

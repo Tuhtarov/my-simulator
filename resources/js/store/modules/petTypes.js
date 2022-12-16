@@ -15,8 +15,8 @@ export default {
     actions: {
         async fetchAllPetTypes({commit, getters}) {
             return await axios.get("/petTypes")
-                .then(petTypes => {
-                    commit('setAllPetTypes', petTypes)
+                .then(({data: {data}}) => {
+                    commit('setAllPetTypes', data)
                     return getters.allPetTypes;
                 })
         },

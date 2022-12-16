@@ -1,12 +1,19 @@
-import './bootstrap';
-import { createApp } from 'vue';
+import {vfmPlugin} from 'vue-final-modal'
+import {createApp} from 'vue';
+import vuex from '@/store/store.js'
+import App from '@/App.vue';
 
 const app = createApp({});
-import store from '@/store/store.js'
-app.use(store)
 
-Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
-    app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-});
+app.use(vuex)
+
+// vue modal
+app.use(vfmPlugin({
+    key: '$vfm',
+    componentName: 'VueFinalModal',
+    dynamicContainerName: 'ModalsContainer'
+}))
+
+app.component('app', App)
 
 app.mount('#app');
