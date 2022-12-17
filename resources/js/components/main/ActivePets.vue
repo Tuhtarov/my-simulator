@@ -8,6 +8,7 @@
         />
 
         <describe-pet-dialog
+            v-if="chosenPet !== null"
             :pet="chosenPet"
         />
     </section>
@@ -51,8 +52,9 @@ export default {
 
 <style scoped>
     .active-pets {
-        margin: auto auto;
+        margin: 0 auto;
         display: flex;
+        width: 100%;
         align-items: center;
         flex-direction: row;
         justify-content: center;

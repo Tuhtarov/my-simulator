@@ -48,10 +48,6 @@ export default {
     transform: translate(-50%, -50%) rotate(-180deg);
 }
 
-.btn-add.close:before, .btn-add.close:after {
-    background: #ff8181;
-}
-
 .btn-add.close:before {
     transform: translate(-50%, -50%) rotate(-40deg);
 }

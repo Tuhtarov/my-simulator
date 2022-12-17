@@ -28,10 +28,6 @@ export default {
         },
     },
 
-    created() {
-        console.log(this.item);
-    },
-
     computed: {
         imgPath() {
             return `${BASE_URL}/images/${this.item.image.name}.${this.item.image.ext}`;

@@ -12,9 +12,10 @@
             <p>№ {{ pet.id }}</p>
             <p>Кличка: {{ pet.name }}</p>
             <p>Тип: {{ pet.petType.name }}</p>
-            <p>Добавлен: {{ pet.created_at }}</p>
+            <p>Максимальный возраст: {{ pet.petType.age_max }}</p>
             <p>Возраст: {{ pet.age }}</p>
             <p>Размер: {{ pet.size }}</p>
+            <p>Добавлен: {{ pet.created_at }}</p>
         </div>
 
         <div class="modal__action">

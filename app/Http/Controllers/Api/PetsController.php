@@ -22,6 +22,15 @@ class PetsController extends Controller
         );
     }
 
+    public function actives()
+    {
+        return PetResource::collection(
+            Pet::with('petType')
+                ->where('is_active', '=', true)
+                ->get()
+        );
+    }
+
     public function activate($id)
     {
         $pet = Pet::with('petType')->findOrFail($id);

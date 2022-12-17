@@ -7,22 +7,25 @@
         classes="modal-container"
         content-class="modal-content"
     >
-        <span class="modal__title">Добавление животного</span>
-        <div class="modal__content" v-if="petTypeIsAvailable">
-            <div class="pet-img-container">
-                <img :src="imgPath" :alt="petType.image.name">
+
+        <template v-if="petTypeIsAvailable">
+            <div class="center-container">
+                <span class="modal__title">{{petType.name}}</span>
+                <div class="pet-img-container">
+                    <img :src="imgPath" :alt="petType.image.name">
+                </div>
             </div>
 
-            <div class="modal__inputs">
-                <label>Кличка <br>
-                    <input v-model="name" type="text" placeholder="...">
-                </label>
+            <div class="modal__content">
+                <div class="modal__inputs">
+                    <input v-model="name" type="text" placeholder="Кличка">
+                </div>
             </div>
-        </div>
+        </template>
 
         <div class="modal__action">
             <button class="red" @click="closeModal">Отмена</button>
-            <button @click="confirmModal" :disabled="!confirmEnabled">Применить</button>
+            <button @click="confirmModal" :disabled="!confirmEnabled">Добавить</button>
         </div>
     </vue-final-modal>
 </template>
@@ -104,9 +107,10 @@ export default {
 }
 
 .modal__title {
-    margin: 0 2rem 0 0;
     font-size: 1.5rem;
     font-weight: 700;
+    text-align: center;
+    text-transform: capitalize;
 }
 
 .modal__content {
@@ -115,7 +119,7 @@ export default {
 }
 
 .modal__inputs {
-    margin-bottom: 20px;
+    margin: 30px 0 20px;
 }
 
 .modal__action {
@@ -126,7 +130,6 @@ export default {
     padding: 1rem 0 0;
 }
 
-
 .pet-img-container {
     display: flex;
     margin: 15px 0px;
@@ -136,6 +139,12 @@ export default {
     display: block;
     max-width: 100px;
     height: auto;
+}
+
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .red {

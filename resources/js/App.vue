@@ -15,6 +15,7 @@
         <active-pets :pets="activePets" />
 
         <create-pet-dialog
+            v-if="chosenPetType !== null"
             :pet-type="chosenPetType"
         />
     </app-container>
@@ -62,7 +63,10 @@ export default {
     },
 
     beforeMount() {
+        const SECONDS_30 = 60 * 500
         this.fetchPets()
+        setInterval(this.fetchPets, SECONDS_30)
+
         this.fetchTypes()
     }
 }

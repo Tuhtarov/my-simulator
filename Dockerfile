@@ -4,7 +4,7 @@ RUN a2enmod rewrite && yes | pecl install xdebug
 
 RUN docker-php-ext-install pdo pdo_mysql mysqli && docker-php-ext-enable xdebug
 
-RUN set -eux; apt-get update; apt-get install -y git wget vim libzip-dev zlib1g-dev libxml2 libxml2-dev libpng-dev;\
+RUN set -eux; apt-get update; apt-get install -y cron git wget vim libzip-dev zlib1g-dev libxml2 libxml2-dev libpng-dev;\
     docker-php-ext-install xml zip gd dom
 
 WORKDIR ./
@@ -19,6 +19,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 RUN chmod -R 777 /var/www/html/storage
+
+# Add the cron job
+RUN crontab -l | { cat; echo "* * * * * /usr/local/bin/php /var/www/html/artisan schedule:run"; } | crontab -
 
 VOLUME ["/var/www/html"]
 

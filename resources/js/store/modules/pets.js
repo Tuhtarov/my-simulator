@@ -58,7 +58,10 @@ export default {
     },
     actions: {
         async fetchAllPets({commit, getters}) {
-            return await axios.get("/pets")
+            // чтобы меньше грузить vuex
+            const onlyActives = true
+
+            return await axios.get(onlyActives ? "/pets/actives" : '/pets')
                 .then(({data: {data}}) => {
                     commit('setAllPets', data)
                     return getters.allPets;
