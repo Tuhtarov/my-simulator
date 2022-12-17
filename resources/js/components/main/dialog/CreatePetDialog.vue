@@ -9,12 +9,12 @@
     >
         <span class="modal__title">Добавление животного</span>
         <div class="modal__content" v-if="petTypeIsAvailable">
-            <p>
-                Тип животного: <b>{{ petType.name }}</b>
-            </p>
+            <div class="pet-img-container">
+                <img :src="imgPath" :alt="petType.image.name">
+            </div>
 
             <div class="modal__inputs">
-                <label>Имя животного <br>
+                <label>Кличка <br>
                     <input v-model="name" type="text" placeholder="...">
                 </label>
             </div>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import {BASE_URL} from "@/api/config";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
@@ -64,6 +65,10 @@ export default {
         })
     },
     computed: {
+        imgPath() {
+            return `${BASE_URL}/images/${this.petType.image.name}.${this.petType.image.ext}`;
+        },
+
         petTypeIsAvailable() {
             return this.petType !== null && this.petType !== undefined
         },
@@ -119,6 +124,18 @@ export default {
     align-items: center;
     flex-shrink: 0;
     padding: 1rem 0 0;
+}
+
+
+.pet-img-container {
+    display: flex;
+    margin: 15px 0px;
+}
+
+.pet-img-container img {
+    display: block;
+    max-width: 100px;
+    height: auto;
 }
 
 .red {

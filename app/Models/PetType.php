@@ -13,11 +13,11 @@ class PetType extends Model
 
     public function pets()
     {
-        return $this->belongsTo(Pet::class);
+        return $this->hasMany(Pet::class);
     }
 
     public function image()
     {
-        return $this->hasOne(Image::class);
+        return $this->belongsTo(Image::class);
     }
 }

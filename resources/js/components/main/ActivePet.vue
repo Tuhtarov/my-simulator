@@ -3,33 +3,45 @@
         class="active-pet"
         @click="this.$emit('clickOnPet', pet)"
     >
-        {{ pet.id }}
-        <br>
-        {{ pet.name }}
-        <br>
-        {{ pet.is_active }}
+        <img :src="imgPath" :alt="pet.petType.image.name">
     </article>
 </template>
 
 <script>
+import {BASE_URL} from "@/api/config";
+
 export default {
     name: "ActivePet",
+
     props: {
         pet: {
             type: Object,
             required: true
         }
     },
+
+    computed: {
+        imgPath() {
+            const img = this.pet.petType.image;
+            return `${BASE_URL}/images/${img.name}.${img.ext}`;
+        },
+    }
 }
 </script>
 
 <style scoped>
 .active-pet {
-    display: block;
-    width: 80px;
-    height: 80px;
-    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+    cursor: pointer;
+}
 
-    background: rgb(112, 54, 33);
+.active-pet img {
+    display: block;
+    height: auto;
+    max-width: 150px;
+    width: 100%;
 }
 </style>

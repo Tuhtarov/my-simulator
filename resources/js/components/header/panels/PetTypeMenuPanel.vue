@@ -5,7 +5,6 @@
             v-for="pet in petTypes"
             :key="pet.id"
             :item="pet"
-
             @take="createPet"
         >
 

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PetTypeResource extends JsonResource
+class ImageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,9 @@ class PetTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => new ImageResource($this->image),
+            'ext' => $this->ext,
+            'width' => $this->width,
+            'height' => $this->height,
         ];
     }
 }

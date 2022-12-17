@@ -18,8 +18,8 @@
         </div>
 
         <div class="modal__action">
-            <button class="red" @click="closeDialog">Ок</button>
             <button class="red" @click="drop(pet)">Деактивация</button>
+            <button @click="closeDialog">Ок</button>
         </div>
     </vue-final-modal>
 </template>

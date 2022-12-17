@@ -3,12 +3,13 @@
         class="pet-menu-item"
         v-bind:class="{ disabled: !isAvailable }"
         @click="pushItem">
-        {{ item.id }}
+        <img :src="imgPath" :alt="item.image.name">
     </div>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import {BASE_URL} from "@/api/config";
 
 export default {
     name: "PetMenuItem",
@@ -27,7 +28,14 @@ export default {
         },
     },
 
+    created() {
+        console.log(this.item);
+    },
+
     computed: {
+        imgPath() {
+            return `${BASE_URL}/images/${this.item.image.name}.${this.item.image.ext}`;
+        },
         isAvailable() {
             return this.petTypeAvailability(this.item.id);
         },
@@ -65,8 +73,6 @@ export default {
     display: block;
     width: 100%;
     height: auto;
-    border-radius: 50%;
-    max-height: 25px;
     max-width: 25px;
 }
 </style>

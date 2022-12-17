@@ -1,5 +1,7 @@
 import axios from "axios";
-export const BASE_API_URL = 'http://localhost:808/api';
+import {BASE_URL} from "@/api/config.js";
+
+export const BASE_API_URL = `${BASE_URL}/api`;
 export const axiosConfig = {
     baseURL: BASE_API_URL,
     headers: {

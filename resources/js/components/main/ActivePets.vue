@@ -53,9 +53,9 @@ export default {
     .active-pets {
         margin: auto auto;
         display: flex;
+        align-items: center;
         flex-direction: row;
         justify-content: center;
-        align-items: flex-start;
         flex-wrap: wrap;
     }
 </style>
