@@ -1,7 +1,10 @@
 <template>
     <app-container>
         <pet-type-menu>
-            <pet-menu-btn-add @click="openPanel" />
+            <pet-menu-btn-add
+                @click="openPanel"
+                :is-active="panelIsOpen"
+            />
 
             <pet-type-menu-panel
                 :pet-types="petTypes"

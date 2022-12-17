@@ -1,11 +1,16 @@
 <template>
-    <div class="btn-add"></div>
+    <div class="btn-add" :class="{close: isActive}"></div>
 </template>
 
 <script>
 export default {
     name: "PetMenuBtnAdd",
-    methods: {
+    props: {
+        isActive: {
+            type: Boolean,
+            required: false,
+            default: false
+        }
     }
 }
 </script>
@@ -31,6 +36,7 @@ export default {
     /*position: absolute;*/
     top: 50%;
     left: 50%;
+    transition: all ease-in 0.1s;
     background: white;
 }
 
@@ -40,5 +46,17 @@ export default {
 
 .btn-add:after {
     transform: translate(-50%, -50%) rotate(-180deg);
+}
+
+.btn-add.close:before, .btn-add.close:after {
+    background: #ff8181;
+}
+
+.btn-add.close:before {
+    transform: translate(-50%, -50%) rotate(-40deg);
+}
+
+.btn-add.close:after {
+    transform: translate(-50%, -50%) rotate(-140deg);
 }
 </style>
