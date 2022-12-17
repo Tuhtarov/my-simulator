@@ -21,6 +21,7 @@ class PetResource extends JsonResource
             'is_dead' => $this->is_dead,
             'size' => $this->size,
             'age' => $this->age,
+            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
 
             'petType' => new PetTypeResource($this->petType)
         ];

@@ -77,6 +77,8 @@ class PetsController extends Controller
      */
     public function show($id)
     {
-        //
+        return new PetResource(
+            Pet::with('petType')->findOrFail($id)
+        );
     }
 }

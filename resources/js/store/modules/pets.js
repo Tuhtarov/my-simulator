@@ -104,8 +104,8 @@ export default {
          *
          * @returns {Promise<void>}
          */
-        async fetchPetById(id) {
-            await axios.get(`/pets/${id}`).then(({data: {data}}) => {
+        async fetchPetById(store, id) {
+            return await axios.get(`/pets/${id}`).then(({data: {data}}) => {
                 return data
             })
         }

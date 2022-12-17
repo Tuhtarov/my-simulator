@@ -54,7 +54,6 @@ export default {
         },
 
         closeModal() {
-            this.$emit("close")
             this.changeDialogState()
             this.name = ''
         },

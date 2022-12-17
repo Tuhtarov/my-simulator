@@ -2,17 +2,24 @@
     <vue-final-modal
         v-bind:model-value="dialog"
         :click-to-close="true"
-        @close="closeModal"
-        @click-outside="closeModal"
+        @close="closeDialog"
+        @click-outside="closeDialog"
         classes="modal-container"
         content-class="modal-content"
     >
-        <span class="modal__title">Просмотр животного</span>
-        <div class="modal__content" v-if="petTypeIsAvailable">
+        <span class="modal__title">Информация о животном</span>
+        <div class="modal__content" v-if="pet !== null">
+            <p>№ {{ pet.id }}</p>
+            <p>Кличка: {{ pet.name }}</p>
+            <p>Тип: {{ pet.petType.name }}</p>
+            <p>Добавлен: {{ pet.created_at }}</p>
+            <p>Возраст: {{ pet.age }}</p>
+            <p>Размер: {{ pet.size }}</p>
         </div>
 
         <div class="modal__action">
-            <button class="red" @click="closeModal">Ок</button>
+            <button class="red" @click="closeDialog">Ок</button>
+            <button class="red" @click="drop(pet)">Деактивация</button>
         </div>
     </vue-final-modal>
 </template>
@@ -30,14 +37,15 @@ export default {
     },
 
     methods: {
-        closeModal() {
-            this.$emit("close")
-            this.changeDialogState()
+        drop(pet) {
+            this.deactivate(pet.id).then(() => {
+                this.closeDialog()
+            })
         },
-
         ...mapActions({
-            changeDialogState: "controls/closeDescribePetDialog",
-            getPet: 'pets/fetchPetById'
+            closeDialog: "controls/closeDescribePetDialog",
+            getPet: 'pets/fetchPetById',
+            deactivate: 'pets/deactivate',
         })
     },
     computed: {
@@ -76,10 +84,6 @@ export default {
 .modal__content {
     flex-grow: 1;
     overflow-y: auto;
-}
-
-.modal__inputs {
-    margin-bottom: 20px;
 }
 
 .modal__action {

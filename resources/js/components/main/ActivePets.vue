@@ -6,28 +6,45 @@
             :pet="pet"
             @clickOnPet="clickOnPet"
         />
+
+        <describe-pet-dialog
+            :pet="chosenPet"
+        />
     </section>
 </template>
 
 <script>
 import ActivePet from "@main/ActivePet.vue";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+import DescribePetDialog from "@main/dialog/DescribePetDialog.vue";
 
 export default {
     name: "ActivePets",
-    components: {ActivePet},
+    components: {DescribePetDialog, ActivePet},
     props: {
         pets: {
             type: Array,
             required: true
         }
     },
+
     methods: {
         clickOnPet(pet) {
-
-            // this.deactivate(pet.id)
+            this.fetchPetById(pet.id).then(fetchedPet => {
+                this.openDescribePet(fetchedPet)
+            })
         },
-        ...mapActions({deactivate: 'pets/deactivate'})
+        ...mapActions({
+            openDescribePet: 'controls/openDescribePetDialog',
+            deactivate: 'pets/deactivate',
+            fetchPetById: 'pets/fetchPetById'
+        })
+    },
+
+    computed: {
+        ...mapGetters({
+            chosenPet: "controls/chosenPet"
+        })
     }
 }
 </script>

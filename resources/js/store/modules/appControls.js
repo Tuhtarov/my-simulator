@@ -11,6 +11,7 @@ export default {
         stateDescribePetDialog: state => state.describePetDialog,
 
         chosenPetType: state => state.petTypeForDialog,
+        chosenPet: state => state.petForDialog,
     },
     mutations: {
         changeCreatePetDialog: (state, val) => {
