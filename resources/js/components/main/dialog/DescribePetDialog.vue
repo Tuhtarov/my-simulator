@@ -9,6 +9,7 @@
     >
         <span class="modal__title">Информация о животном</span>
         <div class="modal__content" v-if="pet !== null">
+            <p v-if="isDead" class="red">Ушёл на тот свет</p>
             <p>ID {{ pet.id }}</p>
             <p>Кличка: {{ pet.name }}</p>
             <p>Тип: {{ pet.petType.name }}</p>
@@ -23,6 +24,7 @@
 
         <div class="modal__action">
             <button class="red" @click="drop(pet)">Деактивация</button>
+            <button class="red" v-if="!isDead" @click="getOld(pet)">Состарить</button>
             <button @click="closeDialog">Ок</button>
         </div>
     </vue-final-modal>
@@ -34,13 +36,18 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name: "DescribePetDialog",
     props: {
-        pet: {
-            type: Object,
+        petId: {
+            type: Number,
             required: true
         }
     },
 
     methods: {
+        getOld(pet) {
+            this.getOldById(pet.id).then(() => {
+                this.closeDialog()
+            })
+        },
         drop(pet) {
             this.deactivate(pet.id).then(() => {
                 this.closeDialog()
@@ -48,13 +55,22 @@ export default {
         },
         ...mapActions({
             closeDialog: "controls/closeDescribePetDialog",
-            getPet: 'pets/fetchPetById',
             deactivate: 'pets/deactivate',
+            getOldById: 'pets/getOldById',
         })
     },
     computed: {
+        pet() {
+            return this.getPet(this.petId)
+        },
+
+        isDead() {
+            return this.pet.is_dead == 1 || this.pet.is_dead === true;
+        },
+
         ...mapGetters({
             dialog: 'controls/stateDescribePetDialog',
+            getPet: 'pets/getPet',
         }),
     }
 }

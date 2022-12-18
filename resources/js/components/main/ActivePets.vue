@@ -9,7 +9,7 @@
 
         <describe-pet-dialog
             v-if="chosenPet !== null"
-            :pet="chosenPet"
+            :petId="chosenPet.id"
         />
     </section>
 </template>

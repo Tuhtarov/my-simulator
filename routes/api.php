@@ -12,6 +12,9 @@ Route::prefix('pets')->group(function () {
 
     Route::post('/deactivate/{id}', [PetsController::class, 'deactivate'])
         ->whereNumber('id');
+
+    Route::post('/getOld/{id}', [PetsController::class, 'getOld'])
+        ->whereNumber('id');
 });
 
 Route::apiResource('pets', PetsController::class);

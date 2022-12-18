@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Contracts\IPetAgingMachine;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PetRequest;
 use App\Http\Resources\PetResource;
 use App\Models\Pet;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class PetsController extends Controller
 {
+    public function __construct(
+        private IPetAgingMachine $petAging
+    )
+    {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,22 +24,20 @@ class PetsController extends Controller
     public function index()
     {
         return PetResource::collection(
-            Pet::with('petType')->get()
+            Pet::all()
         );
     }
 
     public function actives()
     {
         return PetResource::collection(
-            Pet::with('petType')
-                ->where('is_active', '=', true)
-                ->get()
+            Pet::where('is_active', '=', true)->get()
         );
     }
 
     public function activate($id)
     {
-        $pet = Pet::with('petType')->findOrFail($id);
+        $pet = Pet::findOrFail($id);
         $pet->is_active = true;
         $pet->save();
 
@@ -45,9 +49,21 @@ class PetsController extends Controller
      */
     public function deactivate($id)
     {
-        $pet = Pet::with('petType')->findOrFail($id);
+        $pet = Pet::findOrFail($id);
         $pet->is_active = false;
         $pet->save();
+
+        return new PetResource($pet);
+    }
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function getOld($id)
+    {
+        /** @var Pet $pet */
+        $pet = Pet::with('petType')->findOrFail($id);
+        $pet = $this->petAging->ageIt($pet);
 
         return new PetResource($pet);
     }
@@ -58,24 +74,11 @@ class PetsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PetRequest $request)
     {
-        $petTypeId = (int)$request->post('pet_type_id');
-        $name = (string)$request->post('name');
-
-        $pet = new Pet();
-        $pet->name = $name;
-        $pet->pet_type_id = $petTypeId;
-        $pet->is_active = true;
-
-        if ($pet->save()) {
-            // подгружаем поля присвоенные базой по умолчанию
-            return new PetResource(
-                Pet::with('petType')->findOrFail($pet->id)
-            );
-        }
-
-        abort(Response::HTTP_NOT_ACCEPTABLE, 'Питомец не создан');
+        return new PetResource(
+            Pet::create($request->validated())
+        );
     }
 
     /**
@@ -87,7 +90,7 @@ class PetsController extends Controller
     public function show($id)
     {
         return new PetResource(
-            Pet::with('petType')->findOrFail($id)
+            Pet::findOrFail($id)
         );
     }
 }

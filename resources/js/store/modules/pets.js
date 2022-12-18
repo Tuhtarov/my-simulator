@@ -19,6 +19,18 @@ export default {
             return isAvailable
         },
 
+        getPet: (state, getters) => (petId) => {
+            let petResult = null
+
+            getters.allPets.forEach(pet => {
+                if (pet.id === petId) {
+                    petResult = pet
+                }
+            })
+
+            return petResult
+        },
+
         activePets: state => state.pets.reduce((p, item) => {
             if (item.is_active === 1 || item.is_active === true) {
                 p.push(item);
@@ -30,6 +42,16 @@ export default {
     mutations: {
         setAllPets: (state, pets) => {
             state.pets = pets
+        },
+
+        updatePet(state, pet) {
+            state.pets = state.pets.reduce((p, item) => {
+                if (item.id === pet.id) {
+                    item = pet;
+                }
+                p.push(item);
+                return p;
+            }, [])
         },
 
         setActivatePet: (state, pet) => {
@@ -79,7 +101,9 @@ export default {
         async createPet({commit}, {petTypeId, petName}) {
             const params = {
                 'pet_type_id': petTypeId,
-                'name': petName
+                'name': petName,
+                'is_active': true,
+                'age': 0
             };
 
             await axios.post(`/pets`, params)
@@ -99,6 +123,14 @@ export default {
                 })
         },
 
+        async getOldById({commit, getters}, petId) {
+            await axios.post(`/pets/getOld/${petId}`)
+                .then(({data: {data}}) => {
+                    commit('updatePet', data)
+                    return true
+                })
+        },
+
         /**
          * да, можно отфильтровать стейт с питомцами
          * и получить питомца без обращения к серверу,
@@ -107,9 +139,10 @@ export default {
          *
          * @returns {Promise<void>}
          */
-        async fetchPetById(store, id) {
+        async fetchPetById({commit, getters}, id) {
             return await axios.get(`/pets/${id}`).then(({data: {data}}) => {
-                return data
+                commit('updatePet', data)
+                return getters.getPet(id)
             })
         }
     },
