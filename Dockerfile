@@ -18,7 +18,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf &&\
     sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-RUN chmod -R 777 /var/www/html/storage
+RUN chmod -R 777 /var/www/html/storage && cron
 
 # Add the cron job
 RUN crontab -l | { cat; echo "* * * * * /usr/local/bin/php /var/www/html/artisan schedule:run"; } | crontab -

@@ -88,13 +88,13 @@ export default {
 </script>
 
 <style scoped>
-:deep .modal-container {
+:deep(.modal-container) {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-:deep .modal-content {
+:deep(.modal-content) {
     position: relative;
     display: flex;
     flex-direction: column;

@@ -3,7 +3,11 @@
         class="active-pet"
         @click="this.$emit('clickOnPet', pet)"
     >
-        <img :src="imgPath" :alt="pet.petType.image.name">
+        <img
+            :style="styleSize"
+            :src="imgPath"
+            :alt="pet.petType.image.name"
+        >
     </article>
 </template>
 
@@ -13,6 +17,10 @@ import {BASE_URL} from "@/api/config";
 export default {
     name: "ActivePet",
 
+    data: () => ({
+
+    }),
+
     props: {
         pet: {
             type: Object,
@@ -21,6 +29,12 @@ export default {
     },
 
     computed: {
+        styleSize() {
+            return {
+                maxHeight: `${this.pet.size}%`
+            }
+        },
+
         imgPath() {
             const img = this.pet.petType.image;
             return `${BASE_URL}/images/${img.name}.${img.ext}`;
@@ -35,13 +49,14 @@ export default {
     align-items: center;
     justify-content: center;
     margin: 15px;
+    height: 280px;
     cursor: pointer;
 }
 
 .active-pet img {
     display: block;
     height: auto;
-    max-width: 150px;
     width: 100%;
+    transition: all cubic-bezier(0.39, 0.58, 0.57, 1) 2s;
 }
 </style>

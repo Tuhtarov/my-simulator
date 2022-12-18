@@ -9,13 +9,16 @@
     >
         <span class="modal__title">Информация о животном</span>
         <div class="modal__content" v-if="pet !== null">
-            <p>№ {{ pet.id }}</p>
+            <p>ID {{ pet.id }}</p>
             <p>Кличка: {{ pet.name }}</p>
             <p>Тип: {{ pet.petType.name }}</p>
-            <p>Максимальный возраст: {{ pet.petType.age_max }}</p>
-            <p>Возраст: {{ pet.age }}</p>
-            <p>Размер: {{ pet.size }}</p>
+            <p>Максимальный возраст: {{ pet.petType.age_max }} мин.</p>
+            <p>Множитель роста: {{ pet.petType.growth_factor }}</p>
+            <p>Возраст: {{ pet.age }} мин.</p>
+            <p>Размер: {{ pet.size }}%</p>
+            <br>
             <p>Добавлен: {{ pet.created_at }}</p>
+            <p>Обновлён: {{ pet.updated_at }}</p>
         </div>
 
         <div class="modal__action">
@@ -58,13 +61,13 @@ export default {
 </script>
 
 <style scoped>
-:deep .modal-container {
+:deep(.modal-container) {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-:deep .modal-content {
+:deep(.modal-content) {
     position: relative;
     display: flex;
     flex-direction: column;

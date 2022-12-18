@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Services\PetSizeCalculator;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PetResource extends JsonResource
@@ -21,30 +22,9 @@ class PetResource extends JsonResource
             'is_dead' => $this->is_dead,
             'age' => $this->age,
             'created_at' => $this->created_at?->format('d.m.Y H:i'),
-            'size' => self::computeSizeInPercent($this),
-
+            'updated_at' => $this->updated_at?->format('d.m.Y H:i'),
+            'size' => PetSizeCalculator::handle($this),
             'petType' => new PetTypeResource($this->petType)
         ];
-    }
-
-    public static function computeSizeInPercent(PetResource $pet): int
-    {
-        $maxAge = $pet->petType->age_max;
-        $growth = $pet->petType->growth_factor;
-        $age = $pet->age;
-
-        $max = $maxAge * $growth;
-
-        if ($age > $maxAge) {
-            $age = $maxAge;
-        }
-
-        try {
-            $result = (float)($age * $growth / $max) * 100;
-        } catch (\DivisionByZeroError $e) {
-            $result = 1;
-        }
-
-        return $result === 0 ? 1 : $result;
     }
 }
