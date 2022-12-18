@@ -66,9 +66,11 @@ export default {
     },
 
     beforeMount() {
-        const SECONDS_30 = 60 * 500
-        this.fetchPets()
-        setInterval(this.fetchPets, SECONDS_30)
+        this.fetchPets().then(() => {
+            const SECONDS_30 = 60 * 500
+
+            setInterval(this.fetchPets, SECONDS_30)
+        })
 
         this.fetchTypes()
     }
