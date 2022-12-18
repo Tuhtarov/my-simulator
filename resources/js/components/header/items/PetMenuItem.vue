@@ -50,7 +50,6 @@ export default {
     justify-content: center;
     align-items: center;
 
-    margin-right: 6px;
     border-radius: 50%;
     border: 2px solid black;
     width: 36px;
@@ -61,8 +60,8 @@ export default {
 
 .pet-menu-item.disabled {
     opacity: .5;
-    cursor: not-allowed;
     background: gray;
+    cursor: not-allowed;
 }
 
 .pet-menu-item img {

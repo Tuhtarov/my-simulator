@@ -3,11 +3,14 @@ export default {
         createPetDialog: false,
         petTypeForDialog: null,
 
+        createPetTypeDialog: false,
+
         describePetDialog: false,
         petForDialog: null
     },
     getters: {
         stateCreatePetDialog: state => state.createPetDialog,
+        stateCreatePetTypeDialog: state => state.createPetTypeDialog,
         stateDescribePetDialog: state => state.describePetDialog,
 
         chosenPetType: state => state.petTypeForDialog,
@@ -29,6 +32,10 @@ export default {
         changeDescribePetDialog: (state, val) => {
             state.describePetDialog = val;
         },
+
+        changeCreatePetTypeDialog: (state, val) => {
+            state.createPetTypeDialog = val;
+        },
     },
     actions: {
         closeCreatePetDialog({commit}) {
@@ -47,6 +54,14 @@ export default {
         openDescribePetDialog({commit}, pet) {
             commit('changePet', pet)
             commit('changeDescribePetDialog', true)
+        },
+
+        closeCreatePetTypeDialog({commit}) {
+            commit('changeCreatePetTypeDialog', false)
+        },
+
+        openCreatePetTypeDialog({commit, getters}) {
+            commit('changeCreatePetTypeDialog', !getters.stateCreatePetTypeDialog)
         },
     },
     namespaced: true,

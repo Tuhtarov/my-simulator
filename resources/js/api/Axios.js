@@ -11,3 +11,7 @@ export const axiosConfig = {
 
 const axiosInstance = axios.create(axiosConfig);
 export default axiosInstance;
+
+export const axiosForUploading = axios.create({
+    baseURL: BASE_API_URL
+})

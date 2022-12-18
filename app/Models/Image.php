@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'ext', 'mime', 'size', 'width', 'height'];
+    public $timestamps = false;
+    protected $fillable = ['name', 'ext', 'width', 'height'];
 }

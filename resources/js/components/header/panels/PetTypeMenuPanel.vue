@@ -1,5 +1,10 @@
 <template>
     <div v-show="open" class="pet-type-menu-panel">
+        <btn-add-pet-type
+            :is-active="createPetTypeDialogState"
+            @click="openCreatePetTypeDialog"
+        />
+
         <pet-menu-item
             v-if="petsAvailable"
             v-for="pet in petTypes"
@@ -13,12 +18,13 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import PetMenuItem from "@header/items/PetMenuItem.vue";
+import BtnAddPetType from "@header/controls/BtnAddPetType.vue";
 
 export default {
     name: "PetTypeMenuPanel",
-    components: {PetMenuItem},
+    components: {BtnAddPetType, PetMenuItem},
     props: {
         petTypes: {
             type: Array,
@@ -30,19 +36,28 @@ export default {
         }
     },
 
-    data: () => ({}),
+    data: () => ({
+
+    }),
 
     methods: {
         createPet(petType) {
             this.openCreatePetDialog(petType)
         },
-        ...mapActions({openCreatePetDialog: 'controls/openCreatePetDialog'})
+        ...mapActions({
+            openCreatePetDialog: 'controls/openCreatePetDialog',
+            openCreatePetTypeDialog: 'controls/openCreatePetTypeDialog',
+        })
     },
 
     computed: {
         petsAvailable() {
             return this.petTypes !== null && this.petTypes.length > 0;
-        }
+        },
+
+        ...mapGetters({
+            createPetTypeDialogState: 'controls/stateCreatePetTypeDialog',
+        })
     }
 }
 </script>
@@ -65,5 +80,9 @@ export default {
 
     border-radius: 0 8px 8px 0;
     background: rgba(215, 204, 200, 1);
+}
+
+.pet-type-menu-panel > div {
+    margin-right: 6px;
 }
 </style>

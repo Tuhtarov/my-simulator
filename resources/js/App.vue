@@ -18,6 +18,8 @@
             v-if="chosenPetType !== null"
             :pet-type="chosenPetType"
         />
+
+        <create-pet-type-dialog />
     </app-container>
 </template>
 
@@ -29,13 +31,14 @@ import PetTypeMenuPanel from "@header/panels/PetTypeMenuPanel.vue"
 import PetMenuBtnAdd from "@header/controls/PetMenuBtnAdd.vue"
 import ActivePets from "@main/ActivePets.vue";
 import CreatePetDialog from "@main/dialog/CreatePetDialog.vue";
+import CreatePetTypeDialog from "@main/dialog/CreatePetTypeDialog.vue";
 
 export default {
     name: "App",
     components: {
         CreatePetDialog,
         ActivePets, AppContainer, PetTypeMenu,
-        PetTypeMenuPanel, PetMenuBtnAdd
+        PetTypeMenuPanel, PetMenuBtnAdd, CreatePetTypeDialog
     },
 
     data: () => ({
